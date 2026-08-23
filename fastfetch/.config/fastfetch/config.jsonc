@@ -1,0 +1,275 @@
+{
+  "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/master/doc/json_schema.json",
+  "logo": {
+    "type": "auto",
+    "source": "",
+    "color": {
+      "1": "",
+      "2": "",
+      "3": "",
+      "4": "",
+      "5": "",
+      "6": "",
+      "7": "",
+      "8": "",
+      "9": ""
+    },
+    "width": null,
+    "height": null,
+    "padding": {
+      "top": 0,
+      "left": 0,
+      "bottom": 0,
+      "right": 4
+    },
+    "printRemaining": true,
+    "preserveAspectRatio": false,
+    "recache": false,
+    "position": "left",
+    "chafa": {
+      "fgOnly": false,
+      "symbols": "block+border+space-wide-inverted"
+    }
+  },
+  "display": {
+    "stat": false,
+    "pipe": false,
+    "showErrors": false,
+    "disableLinewrap": true,
+    "hideCursor": false,
+    "separator": "   ",
+    "color": {
+      "keys": "cyan",
+      "title": "light_blue",
+      "output": "",
+      "separator": ""
+    },
+    "brightColor": true,
+    "duration": {
+      "abbreviation": false,
+      "spaceBeforeUnit": "default"
+    },
+    "size": {
+      "maxPrefix": "YB",
+      "binaryPrefix": "iec",
+      "ndigits": 2,
+      "spaceBeforeUnit": "default"
+    },
+    "temp": {
+      "unit": "D",
+      "ndigits": 1,
+      "color": {
+        "light_blue": "32",
+        "yellow": "93",
+        "red": "91"
+      },
+      "spaceBeforeUnit": "default"
+    },
+    "percent": {
+      "type": [
+        "num",
+        "num-color"
+      ],
+      "ndigits": 0,
+      "color": {
+        "light_blue": "32",
+        "yellow": "93",
+        "red": "91"
+      },
+      "spaceBeforeUnit": "default",
+      "width": 0
+    },
+    "bar": {
+      "char": {
+        "elapsed": "",
+        "total": ""
+      },
+      "border": {
+        "left": "",
+        "right": "",
+        "leftElapsed": "",
+        "rightElapsed": ""
+      },
+      "color": {
+        "elapsed": "auto",
+        "total": "97",
+        "border": "97"
+      },
+      "width": 50
+    },
+    "fraction": {
+      "ndigits": 2
+    },
+    "noBuffer": false,
+    "key": {
+      "width": 0,
+      "type": "string",
+      "paddingLeft": 0
+    },
+    "freq": {
+      "ndigits": 2,
+      "spaceBeforeUnit": "default"
+    },
+    "constants": []
+  },
+  "general": {
+    "thread": true,
+    "processingTimeout": 5000,
+    "detectVersion": true,
+    "playerName": "",
+    "dsForceDrm": false
+  },
+  "modules": [
+    "break",
+    {
+      "type": "title",
+      "format": "{##E8C5C8}{user-name}{#}@{##E8C5C8}{host-name}",
+      "key": "󰋜 Host",
+      "keyColor": "#E8C5C8",
+      "keyIcon": "󰋜",
+      "fqdn": false,
+      "color": {
+        "user": "",
+        "at": "",
+        "host": ""
+      }
+    },
+    "break",
+    {
+      "type": "os",
+      "key": " OS",
+      "keyColor": "light_blue",
+      "keyIcon": "",
+    },
+    {
+      "type": "host",
+      "key": " Device",
+      "keyIcon": "",
+      "keyColor": "light_blue"
+    },
+    {
+      "type": "kernel",
+      "keyColor": "light_blue",
+      "key": " Kernel"
+    },
+    {
+      "type": "shell",
+      "key": " Shell",
+      "keyColor": "light_blue",
+    },
+    {
+      "type": "de",
+      "key": "󰟀 DE",
+      "keyColor": "light_blue",
+    },
+    {
+      "type": "packages",
+      "key": "󰏗 Packages",
+      "keyColor": "light_blue",
+      "disabled": [
+        "winget"
+      ],
+      "combined": false
+    },
+    {
+      "type": "display",
+      "key": "󰹑 Display",
+      "keyColor": "light_blue",
+      "keyIcon": "󰹑",
+      "compactType": "none",
+      "preciseRefreshRate": true,
+      "order": null
+    },
+    "break",
+    {
+      "type": "cpu",
+      "key": "󰻠 CPU",
+      "temp": true,
+      "showPeCoreCount": true
+    },
+    {
+      "type": "gpu",
+      "key": "󰾲 GPU",
+      "driverSpecific": false,
+      "detectionMethod": "pci",
+      "temp": true,
+      "hideType": "none",
+      "percent": {
+        "light_blue": 50,
+        "yellow": 80,
+        "type": 0
+      }
+    },
+    {
+      "type": "memory",
+      "key": "󰍛 RAM",
+      "percent": {
+        "light_blue": 50,
+        "yellow": 80,
+        "type": 0
+      }
+    },
+    {
+      "type": "disk",
+      "key": " Disk",
+      "showRegular": true,
+      "showExternal": true,
+      "showHidden": false,
+      "showSubvolumes": false,
+      "showReadOnly": true,
+      "showUnknown": false,
+      "folders": "",
+      "hideFolders": "/efi:/boot:/boot/*",
+      "hideFS": "",
+      "useAvailable": false,
+      "percent": {
+        "light_blue": 50,
+        "yellow": 80,
+        "type": 0
+      }
+    },
+    {
+      "type": "battery",
+      "key": "󰂁 Battery",
+      "keyIcon": "󰂁",
+      "temp": false,
+      "percent": {
+        "light_blue": 50,
+        "yellow": 20,
+        "type": 0
+      }
+    },
+    "break",
+    {
+      "type": "uptime",
+      "key": " Uptime",
+      "keyColor": "red",
+    },
+    {
+      "type": "command",
+      "text": "INSTALL_SEC=$(date -d '2026-07-12 18:07:54' +%s)\nCURRENT_SEC=$(date +%s)\n\nDIFF_SEC=$((CURRENT_SEC - INSTALL_SEC))\n\nDAYS=$((DIFF_SEC / 86400))\nHOURS=$(((DIFF_SEC % 86400) / 3600))\nMINUTES=$((DIFF_SEC % 3600) / 60)\nSECONDS=$((DIFF_SEC % 60))\n\necho \"${DAYS} days, ${HOURS} hours\"",
+      "key": "󰐥 OS Age",
+      "keyColor": "red",
+    },
+    {
+      "type": "poweradapter",
+      "keyIcon": "󰚥"
+    },
+    "break",
+    {
+      "type": "colors",
+      "key": " ",
+      "keyIcon": "",
+      "symbol": "circle",
+      "paddingLeft": 0,
+      "circle": {
+        "radius": 30,
+        "width": 5,
+        "range": [
+          0,
+          15
+        ]
+      }
+    }
+  ]
+}
