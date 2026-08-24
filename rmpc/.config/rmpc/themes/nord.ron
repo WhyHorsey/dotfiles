@@ -1,0 +1,336 @@
+#![enable(implicit_some)]
+#![enable(unwrap_newtypes)]
+#![enable(unwrap_variant_newtypes)]
+(
+    default_album_art_path: None,
+    format_tag_separator: " | ",
+    multiple_tag_resolution_strategy: All,
+    browser_column_widths: [20, 38, 42],
+    background_color: "#1e1e2e",
+    modal_backdrop: true,
+    text_color: "#cdd6f4",
+    header_background_color: "#1e1e2e",
+    modal_background_color: "#1e1e2e",
+    preview_label_style: (fg: "#e3c5dd"),
+    preview_metadata_group_style: (fg: "#CBC3E3"),
+    song_table_album_separator: None,
+    tab_bar: (
+        active_style: (fg: "#1e1e2e", bg: "#CBC3E3", modifiers: "Bold"),
+        inactive_style: (fg: "#585b70", bg: "#1e1e2e"),
+    ),
+    highlighted_item_style: (fg: "#f3d7f3", modifiers: "Bold"),
+    current_item_style: (fg: "#1e1e2e", bg: "#CBC3E3", modifiers: "Bold"),
+    borders_style: (fg: "#CBC3E3", modifiers: "Bold"),
+    highlight_border_style: (fg: "#CBC3E3"),
+    symbols: (song: "󰝚 ", dir: "󱍙 ", playlist: "󰲸 ", marker: "* ", ellipsis: "...",
+        song_style: (fg: "#CBC3E3"), song_highlighted_style: None, song_current_style: (fg: "#1e1e2e"),
+        dir_style: (fg: "#CBC3E3"), dir_highlighted_style: None, dir_current_style: (fg: "#1e1e2e"),
+        playlist_style: (fg: "#CBC3E3"), playlist_highlighted_style: None, playlist_current_style: (fg: "#1e1e2e"),
+        marker_style: (fg: "#ebcb8b"), marker_highlighted_style: (fg: "#ebcb8b"), marker_current_style: (fg: "#1e1e2e", bg: "#ebcb8b" ),
+    ),
+    progress_bar: (
+        symbols: ["", "█", "", "█", "" ],
+        track_style: (fg: "#181825", bg: "#1e1e2e"),
+        elapsed_style: (fg: "#c9bfe9", bg: "#1e1e2e"),
+        thumb_style: (fg: "#CBC3E3", bg: "#181825"),
+        use_track_when_empty: false,
+    ),
+    scrollbar: (
+        symbols: ["┋", "█", "󰄿", "󰄼"],
+        track_style: (fg: "#CBC3E3"),
+        ends_style: (fg: "#CBC3E3"),
+        thumb_style: (fg: "#CBC3E3"),
+    ),
+    song_table_format: [
+        (prop: (kind: Transform(Replace(content: (kind: Sticker("rating")), replacements: [
+            (match:  "0", replace: (kind: Group([(kind: Text("󰎡"),style: (fg: "#CBC3E3"))]))),
+            (match:  "1", replace: (kind: Group([(kind: Text("󰎤"),style: (fg: "#CBC3E3"))]))),
+            (match:  "2", replace: (kind: Group([(kind: Text("󰎧"),style: (fg: "#CBC3E3"))]))),
+            (match:  "3", replace: (kind: Group([(kind: Text("󰎪"),style: (fg: "#CBC3E3"))]))),
+            (match:  "4", replace: (kind: Group([(kind: Text("󰎭"),style: (fg: "#CBC3E3"))]))),
+            (match:  "5", replace: (kind: Group([(kind: Text("󰎱"),style: (fg: "#CBC3E3"))]))),
+            (match:  "6", replace: (kind: Group([(kind: Text("󰎳"),style: (fg: "#CBC3E3"))]))),
+            (match:  "7", replace: (kind: Group([(kind: Text("󰎶"),style: (fg: "#CBC3E3"))]))),
+            (match:  "8", replace: (kind: Group([(kind: Text("󰎹"),style: (fg: "#CBC3E3"))]))),
+            (match:  "9", replace: (kind: Group([(kind: Text("󰎼"),style: (fg: "#CBC3E3"))]))),
+            (match: "10", replace: (kind: Group([(kind: Text("󰽽"),style: (fg: "#CBC3E3"))]))),
+        ])), default: (kind: Text(""), style: (fg: "#585b70"))),
+        width: "3",
+        label: "Rating",
+        alignment: Center,
+            label_prop: (kind: Group([
+                (kind: Text("󰩳"), style: (fg: "#CBC3E3")),
+            ]))
+        ),
+        (prop: (kind: Sticker("playCount"),style: (fg: "#CBC3E3"),
+            default: (kind: Text(""), style: (fg: "#585b70"))),
+            width: "3",
+            alignment: Left,
+            label: "Playcount",
+            label_prop: (kind: Group([
+                (kind: Text("󰆙"), style: (fg: "#CBC3E3")),
+            ]))
+        ),
+        (prop:(kind: Text("│"), style: (fg: "#CBC3E3")),
+            width: "1",
+            alignment: Center,
+            label: "",
+            label_prop: (kind: Group([
+                (kind: Text("│"), style: (fg: "#CBC3E3")),
+            ]))
+        ),
+        (prop: (kind: Property(Artist), style: (fg: "#CBC3E3"),
+            default: (kind: Text("Unknown Artist"), style: (fg: "#585b70"))),
+            width: "23%",
+            label_prop: (kind: Group([
+                (kind: Text("Artist "), style: (fg: "#cdd6f4")),
+                (kind: Text(""), style: (fg: "#CBC3E3"))
+            ]))
+        ),
+        (prop: (kind: Property(Title), style: (fg: "#cdd6f4"),
+            default: (kind: Property(Filename), style: (fg: "#cdd6f4"),
+                default: (kind: Text("Unknown Title"), style: (fg: "#cdd6f4")))),
+            width: "36%",
+            label_prop: (kind: Group([
+                (kind: Text("Title "), style: (fg: "#cdd6f4")),
+                (kind: Text(""), style: (fg: "#CBC3E3"))
+            ]))
+        ),
+        (prop: (kind: Property(Album), style: (fg: "#CBC3E3"),
+            default: (kind: Text("Unknown Album"), style: (fg: "#585b70"))),
+            width: "33%",
+            label_prop: (kind: Group([
+                (kind: Text("Album "), style: (fg: "#cdd6f4")),
+                (kind: Text("󰀥"), style: (fg: "#CBC3E3"))
+            ]))
+        ),
+        (prop: (kind: Property(Duration), style: (fg: "#dfc9c9"),
+            default: (kind: Text("-"))),
+            width: "8%",
+            alignment: Right,
+            label_prop: (kind: Group([
+                (kind: Text("Length "), style: (fg: "#cdd6f4")),
+                (kind: Text(" "), style: (fg: "#CBC3E3"))
+            ]))
+        ),
+    ],
+    layout: Split(direction: Vertical, panes: [
+        (size: "6", borders: "NONE", pane: Component("header")),
+        (size: "100%", borders: "NONE", pane: Pane(TabContent)),
+        (size: "3", borders: "NONE", pane: Component("progress_bar")),
+    ]),
+    browser_song_format: [
+        (kind: Group([
+            (kind: Property(Track)),
+            (kind: Text(" ")),
+        ])),
+        (kind: Group([
+            (kind: Property(Artist)),
+            (kind: Text(" - ")),
+            (kind: Property(Title)),
+        ]), default: (kind: Property(Filename)))
+    ],
+    level_styles: (
+        info:  (fg: "#a3be8c", bg: "#1e1e2e"),
+        warn:  (fg: "#ebcb8b", bg: "#1e1e2e"),
+        error: (fg: "#bf616a", bg: "#1e1e2e"),
+        debug: (fg: "#d08770", bg: "#1e1e2e"),
+        trace: (fg: "#e3c5dd", bg: "#1e1e2e"),
+    ),
+    components: {
+        "header_tab_bar": Split(direction: Horizontal, panes: [
+            (size: "11%", borders: "NONE", pane: Component("tab_bar_left")),
+            (size: "78%", borders: "NONE", pane: Pane(Tabs)),
+            (size: "11%", borders: "NONE", pane: Component("tab_bar_right")),
+        ]),
+        "header_line_1": Split(direction: Horizontal, panes: [
+            (size: "22%", pane: Component("header_element_1")),
+            (size: "56%", pane: Component("header_element_2")),
+            (size: "22%", pane: Component("header_element_3")),
+        ]),
+        "header_line_2": Split(direction: Horizontal, panes: [
+            (size: "25%", pane: Component("header_element_7")),
+            (size: "50%", pane: Component("header_element_5")),
+            (size: "25%", pane: Component("header_element_6")),
+        ]),
+        "header": Split(direction: Vertical, panes: [
+            (size: "2", borders: "TOP | RIGHT | LEFT", border_symbols: Rounded,
+                pane: Split(direction: Horizontal, panes: [
+                    (size: "100%", borders: "NONE", pane: Component("header_tab_bar")),
+                ])
+            ),
+            (size: "4", borders: "ALL", border_symbols: Library("rounded_collapsed_top"),
+                border_title: [
+                    (kind: Text("─"), style: (fg: "#CBC3E3")),
+                    (kind: Transform(Replace(content: (kind: Sticker("like")), replacements: [
+                        (match:  "0", replace: (kind: Group([(kind: Text("["), style: (fg: "#CBC3E3")), (kind: Text("󰋔 "), style: (fg: "#bf616a")), (kind: Text("]"), style: (fg: "#CBC3E3"))]))),
+                        (match:  "1", replace: (kind: Group([(kind: Text("["), style: (fg: "#CBC3E3")), (kind: Text("󰋕 "), style: (fg: "#ebcb8b")), (kind: Text("]"), style: (fg: "#CBC3E3"))]))),
+                        (match:  "2", replace: (kind: Group([(kind: Text("["), style: (fg: "#CBC3E3")), (kind: Text(" "), style: (fg: "#a3be8c")), (kind: Text("]"), style: (fg: "#CBC3E3"))]))),
+                    ]))),
+                    (kind: Text("─"), style: (fg: "#CBC3E3")),
+                    (kind: Transform(Replace(content: (kind: Sticker("rating")), replacements: [
+                        (match:  "0", replace: (kind: Group([(kind: Text("["), style: (fg: "#CBC3E3")), (kind: Text("     "), style: (fg: "#CBC3E3")), (kind: Text("]"), style: (fg: "#CBC3E3"))]))),
+                        (match:  "1", replace: (kind: Group([(kind: Text("["), style: (fg: "#CBC3E3")), (kind: Text(" "),         style: (fg: "#f2cdcd")), (kind: Text("    "), style: (fg: "#CBC3E3")), (kind: Text("]"), style: (fg: "#CBC3E3"))]))),
+                        (match:  "2", replace: (kind: Group([(kind: Text("["), style: (fg: "#CBC3E3")), (kind: Text(" "),         style: (fg: "#f2cdcd")), (kind: Text("    "), style: (fg: "#CBC3E3")), (kind: Text("]"), style: (fg: "#CBC3E3"))]))),
+                        (match:  "3", replace: (kind: Group([(kind: Text("["), style: (fg: "#CBC3E3")), (kind: Text("  "),       style: (fg: "#f2cdcd")), (kind: Text("   "), style: (fg: "#CBC3E3")), (kind: Text("]"), style: (fg: "#CBC3E3"))]))),
+                        (match:  "4", replace: (kind: Group([(kind: Text("["), style: (fg: "#CBC3E3")), (kind: Text("  "),       style: (fg: "#f2cdcd")), (kind: Text("   "), style: (fg: "#CBC3E3")), (kind: Text("]"), style: (fg: "#CBC3E3"))]))),
+                        (match:  "5", replace: (kind: Group([(kind: Text("["), style: (fg: "#CBC3E3")), (kind: Text("   "),     style: (fg: "#f2cdcd")), (kind: Text("  "), style: (fg: "#CBC3E3")), (kind: Text("]"), style: (fg: "#CBC3E3"))]))),
+                        (match:  "6", replace: (kind: Group([(kind: Text("["), style: (fg: "#CBC3E3")), (kind: Text("   "),     style: (fg: "#f2cdcd")), (kind: Text("  "), style: (fg: "#CBC3E3")), (kind: Text("]"), style: (fg: "#CBC3E3"))]))),
+                        (match:  "7", replace: (kind: Group([(kind: Text("["), style: (fg: "#CBC3E3")), (kind: Text("    "),   style: (fg: "#f2cdcd")), (kind: Text(" "), style: (fg: "#CBC3E3")), (kind: Text("]"), style: (fg: "#CBC3E3"))]))),
+                        (match:  "8", replace: (kind: Group([(kind: Text("["), style: (fg: "#CBC3E3")), (kind: Text("    "),   style: (fg: "#f2cdcd")), (kind: Text(" "), style: (fg: "#CBC3E3")), (kind: Text("]"), style: (fg: "#CBC3E3"))]))),
+                        (match:  "9", replace: (kind: Group([(kind: Text("["), style: (fg: "#CBC3E3")), (kind: Text("     "), style: (fg: "#f2cdcd")), (kind: Text("]"), style: (fg: "#CBC3E3"))]))),
+                        (match: "10", replace: (kind: Group([(kind: Text("["), style: (fg: "#CBC3E3")), (kind: Text("     "), style: (fg: "#f2cdcd")), (kind: Text("]"), style: (fg: "#CBC3E3"))]))),
+                    ])), default: (kind: Text("─"),style: (fg: "#CBC3E3"))),
+                    (kind: Text("─"), style: (fg: "#CBC3E3")),
+                ],
+                border_title_position: Bottom,
+                border_title_alignment: Right,
+                pane: Split(direction: Vertical, panes: [
+                    (size: "50%", borders: "NONE", pane: Component("header_line_1")),
+                    (size: "50%", borders: "NONE", pane: Component("header_line_2")),
+                ])
+            ),
+        ]),
+        "progress_bar": Split(direction: Vertical, panes: [
+            (size: "3", borders: "ALL", border_symbols: Rounded ,
+                border_title: [
+                    (kind: Property(Status(Elapsed)),style: (fg: "#cdd6f4")),
+                    (kind: Property(Status(StateV2(playing_label: "─󱦟─", paused_label: "  ", stopped_label: "  "))),
+                        style: (fg: "#CBC3E3", modifiers: "Bold")),
+                    (kind: Property(Status(Duration)),style: (fg: "#cdd6f4")),
+                ],
+                border_title_position: Top,
+                border_title_alignment: Center,
+                pane: Split(direction: Vertical, panes: [
+                    (size: "100%", borders: "NONE",pane: Pane(ProgressBar)),
+                ])
+            ),
+        ]),
+        "tab_bar_left": Split(direction: Horizontal, panes: [
+            (size: "100%", pane: Pane(Property(content: [
+                (kind: Text(" "), style: (fg: "#CBC3E3", modifiers: "Bold")),
+                (kind: Property(Status(StateV2(playing_label: "", paused_label: "", stopped_label: ""))),
+                    style: (fg: "#cdd6f4")),
+                (kind: Text("  "), style: (fg: "#CBC3E3", modifiers: "Bold")),
+                (kind: Property(Widget(ScanStatus)), style: (fg: "#cdd6f4", modifiers: "Bold")),
+                (kind: Text(" ")),
+                (kind: Property(Status(InputBuffer())), style: (fg: "#585b70")),
+            ], align: Left))),
+        ]),
+        "tab_bar_right": Split(direction: Horizontal, panes: [
+            (size: "100%", pane: Pane(Property(content: [
+                (kind: Text(" 󱡬"), style: (fg: "#CBC3E3", modifiers: "Bold")),
+                (kind: Property(Status(Volume)), style: (fg: "#cdd6f4")),
+                (kind: Text("% "), style: (fg: "#CBC3E3", modifiers: "Bold"))
+            ], align: Right))),
+        ]),
+        "header_element_1": Split(direction: Horizontal, panes: [
+            (size: "100%", pane: Pane(Property(content: [
+                (kind: Text("[ "),style: (fg: "#CBC3E3", modifiers: "Bold")),
+                (kind: Property(Status(Elapsed)),style: (fg: "#cdd6f4")),
+                (kind: Text(" / "),style: (fg: "#CBC3E3", modifiers: "Bold")),
+                (kind: Property(Status(Duration)),style: (fg: "#cdd6f4")),
+                (kind: Text(" 󱦟"),style: (fg: "#CBC3E3", modifiers: "Bold")),
+                (kind: Text(" ]"),style: (fg: "#CBC3E3", modifiers: "Bold")),
+            ], align: Left))),
+        ]),
+        "header_element_2": Split(direction: Horizontal, panes: [
+            (size: "100%", pane: Pane(Property(content: [
+                (kind: Property(Song(Title)), style: (fg: "#cdd6f4",modifiers: "Bold"),
+                    default: (kind: Property(Song(Filename)), style: (fg: "#cdd6f4",modifiers: "Bold"),
+                        default: (kind: Text("Unknown Title"), style: (fg: "#cdd6f4",modifiers: "Bold"))
+                    )
+                )
+            ], align: Center, scroll_speed: 6))),
+        ]),
+        "header_element_3": Split(direction: Horizontal, panes: [
+            (size: "100%", pane: Pane(Property(content: [
+                (kind: Text("[ "),style: (fg: "#CBC3E3", modifiers: "Bold")),
+                (kind: Property(Status(RepeatV2(on_label: "", off_label: "",
+                    on_style: (fg: "#cdd6f4", modifiers: "Bold"),
+                    off_style: (fg: "#585b70", modifiers: "Bold"))))
+                ),
+                (kind: Text(" | "),style: (fg: "#CBC3E3", modifiers: "Bold")),
+                (kind: Property(Status(RandomV2(on_label: "", off_label: "",
+                    on_style: (fg: "#cdd6f4", modifiers: "Bold"),
+                    off_style: (fg: "#585b70", modifiers: "Bold"))))
+                ),
+                (kind: Text(" | "),style: (fg: "#CBC3E3", modifiers: "Bold")),
+                (kind: Property(Status(ConsumeV2(on_label: "󰮯", off_label: "󰮯", oneshot_label: "󰮯󰇊",
+                    on_style: (fg: "#cdd6f4", modifiers: "Bold"),
+                    off_style: (fg: "#585b70", modifiers: "Bold"))))
+                ),
+                (kind: Text(" | "),style: (fg: "#CBC3E3", modifiers: "Bold")),
+                (kind: Property(Status(SingleV2(on_label: "󰎤", off_label: "󰎦", oneshot_label: "󰇊", off_oneshot_label: "󱅊",
+                    on_style: (fg: "#cdd6f4", modifiers: "Bold"),
+                    off_style: (fg: "#585b70", modifiers: "Bold"))))
+                ),
+                (kind: Text(" | "),style: (fg: "#CBC3E3", modifiers: "Bold")),
+                (kind: Property(Status(Crossfade)),style: (fg: "#585b70"),
+                    default: (kind: Text("󰴽"), style: (fg: "#585b70"))
+                ),
+                (kind: Text(" | "),style: (fg: "#CBC3E3", modifiers: "Bold")),
+                (kind: Transform(Replace(content: (kind: Property(Status(InputMode()))), replacements: [
+                    (match:  "Normal", replace: (kind: Group([(kind: Text("N"),style: (fg: "#585b70", modifiers: "Bold"))]))),
+                    (match:  "Insert", replace: (kind: Group([(kind: Text("I"),style: (fg: "#cdd6f4", modifiers: "Bold"))]))),
+                ]))),
+            ], align: Right))),
+        ]),
+        "header_element_5": Split(direction: Horizontal, panes: [
+            (size: "100%", pane: Pane(Property(content: [
+                (kind: Transform(Replace(content:
+                    (kind: Property(Song(Artist)), style: (fg: "#dfc9c9"),
+                        default: (kind: Text("Unknown Artist"), style: (fg: "#dfc9c9"))
+                    ), replacements: [(match:  "", replace: (kind: Group([(kind: Text("Unknown Artist"), style: (fg: "#dfc9c9"))])))]
+                ))),
+                (kind: Text(" - "), style: (fg: "#cdd6f4")),
+                (kind: Transform(Replace(content:
+                    (kind: Property(Song(Album)),style: (fg: "#CBC3E3" ),
+                        default: (kind: Text("Unknown Album"), style: (fg: "#CBC3E3"))
+                    ), replacements: [(match:  "", replace: (kind: Group([(kind: Text("Unknown Album"), style: (fg: "#CBC3E3"))])))]
+                ))),
+            ], align: Center, scroll_speed: 6))),
+        ]),
+        "header_element_6": Split(direction: Horizontal, panes: [
+            (size: "100%", pane: Pane(Property(content: [
+                (kind: Text("[ "),style: (fg: "#CBC3E3", modifiers: "Bold")),
+                (kind: Property(Status(QueueTimeRemaining(separator: " "))),style: (fg: "#cdd6f4")),
+                (kind: Text(" / "),style: (fg: "#CBC3E3", modifiers: "Bold")),
+                (kind: Property(Status(QueueTimeTotal(separator: " "))),style: (fg: "#cdd6f4")),
+                (kind: Text(" 󱎫"),style: (fg: "#CBC3E3", modifiers: "Bold")),
+            ], align: Right))),
+        ]),
+        "header_element_7": Split(direction: Horizontal, panes: [
+            (size: "100%", pane: Pane(Property(content: [
+                (kind: Text("[ "),style: (fg: "#CBC3E3", modifiers: "Bold")),
+                (kind: Property(Song(Position)), style: (fg: "#cdd6f4"), default: (kind: Text("0"), style: (fg: "#cdd6f4"))),
+                (kind: Text(" / "),style: (fg: "#CBC3E3", modifiers: "Bold")),
+                (kind: Property(Status(QueueLength())),style: (fg: "#cdd6f4")),
+                (kind: Text(" 󰴍"),style: (fg: "#CBC3E3", modifiers: "Bold")),
+                (kind: Text(" ]"),style: (fg: "#CBC3E3", modifiers: "Bold"))
+            ], align: Left))),
+        ]),
+    },
+    cava: (
+        bar_symbols: ['▁', '▂', '▃', '▄', '▅', '▆', '▇', '█'],
+        bar_width: 1, bar_spacing: 1,
+        bg_color: "#1e1e2e",
+        bar_color: Gradient({
+            0:   "#585b70",
+            33:  "#CBC3E3",
+            67:  "#f2cdcd",
+            100: "#b4befe",
+        })
+    ),
+    lyrics:(
+        timestamp: false,
+        alignment: Center,
+    ),
+    border_symbol_sets: {
+        "rounded_collapsed_top": (
+            parent: Rounded,
+            top_left: "├",
+            top_right: "┤",
+        ),
+    },
+)
