@@ -1,0 +1,20 @@
+MenuBar=Disabled
+
+[Desktop Entry]
+DefaultProfile=whyhorsey.profile
+
+[General]
+ConfigVersion=1
+
+[KonsoleWindow]
+RememberWindowSize=false
+
+[MainWindow]
+MenuBar=Disabled
+ToolBarsMovable=Enabled
+
+[Notification Messages]
+CloseSingleTab=true
+
+[UiSettings]
+ColorScheme=
