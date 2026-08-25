@@ -1,0 +1,14 @@
+[6e75dc03-a62b-455d-944e-0e7429a30ec5]
+Description=don't remember window size
+ignoregeometry=true
+ignoregeometryrule=2
+wmclasscomplete=true
+
+[General]
+count=2
+rules=da8dd06b-4d04-4a35-9415-3e8d76af5734,6e75dc03-a62b-455d-944e-0e7429a30ec5
+
+[da8dd06b-4d04-4a35-9415-3e8d76af5734]
+Description=no title
+noborder=true
+noborderrule=2
