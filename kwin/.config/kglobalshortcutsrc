@@ -129,7 +129,7 @@ Window Fullscreen=none,none,Make Window Fullscreen
 Window Grow Horizontal=none,none,Expand Window Horizontally
 Window Grow Vertical=none,none,Expand Window Vertically
 Window Lower=none,none,Lower Window
-Window Maximize=Meta+PgUp,Meta+PgUp,Maximize Window
+Window Maximize=Meta+P,Meta+PgUp,Maximize Window
 Window Maximize Horizontal=none,none,Maximize Window Horizontally
 Window Maximize Vertical=none,none,Maximize Window Vertically
 Window Minimize=Meta+Q\tMeta+PgDown,Meta+PgDown,Minimize Window
@@ -379,7 +379,7 @@ switch to previous activity=none,none,Switch to Previous Activity
 toggle do not disturb=none,none,Toggle do not disturb
 
 [services][code.desktop]
-_launch=Meta+P
+_launch=Alt+P
 
 [services][io.missioncenter.MissionCenter.desktop]
 _launch=Alt+S

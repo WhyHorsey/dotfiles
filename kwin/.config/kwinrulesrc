@@ -5,8 +5,20 @@ ignoregeometryrule=2
 wmclasscomplete=true
 
 [General]
-count=2
-rules=da8dd06b-4d04-4a35-9415-3e8d76af5734,6e75dc03-a62b-455d-944e-0e7429a30ec5
+count=3
+rules=bdf0f109-c8db-4950-a122-d8a5396e0a62,da8dd06b-4d04-4a35-9415-3e8d76af5734,6e75dc03-a62b-455d-944e-0e7429a30ec5
+
+[bdf0f109-c8db-4950-a122-d8a5396e0a62]
+Description=Window settings for th06.exe
+clientmachine=localhost
+minsize=1920,1200
+minsizerule=2
+noborder=true
+noborderrule=2
+position=0,0
+positionrule=2
+wmclass=th[0-9]{2,3}[.]exe
+wmclassmatch=3
 
 [da8dd06b-4d04-4a35-9415-3e8d76af5734]
 Description=no title
