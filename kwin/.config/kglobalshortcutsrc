@@ -407,6 +407,8 @@ ShowOSD=Display\tMeta+Shift+P
 _launch=Meta+S\tMeta+Esc
 
 [services][org.kde.spectacle.desktop]
+CurrentMonitorScreenShot=none
+OpenWithoutScreenshot=none
 RecordRegion=Meta+Shift+R
 _launch=Print
 
