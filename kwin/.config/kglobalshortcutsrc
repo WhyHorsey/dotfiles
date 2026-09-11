@@ -383,6 +383,9 @@ toggle do not disturb=none,none,Toggle do not disturb
 [services][code.desktop]
 _launch=Alt+P
 
+[services][discord.desktop]
+_launch=Meta+,
+
 [services][io.missioncenter.MissionCenter.desktop]
 _launch=Alt+S
 
