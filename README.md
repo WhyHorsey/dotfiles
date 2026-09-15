@@ -1,6 +1,6 @@
 # ❔ What is this repo?
 
-This is basically a "storage" for my settings/configurations of various programs on [my Linux System](https://github.com/WhyHorsey/linux-notes). By doing this, if I decided to switch to a new device in the future, I then can just clone this repo and have all my programs already set up the way I wanted. However, if you also wanna use my configuration for the programs in this directory, then feel free to [do it](#⚙️%20Dependencies)!
+This is basically a "storage" for my settings/configurations of various programs on [my Linux System](https://github.com/WhyHorsey/linux-notes). By doing this, if I decided to switch to a new device in the future, I then can just clone this repo and have all my programs already set up the way I wanted. However, if you also wanna use my configuration for the programs in this directory, then feel free to [do it](#%EF%B8%8F-dependencies)!
 
 Currently this directory include : 
 
