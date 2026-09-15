@@ -380,6 +380,9 @@ switch to next activity=none,none,Switch to Next Activity
 switch to previous activity=none,none,Switch to Previous Activity
 toggle do not disturb=none,none,Toggle do not disturb
 
+[services][FFPWA-01M2G2S7HEPPABYN64ZESDC41E.desktop]
+_launch=Meta+O
+
 [services][code.desktop]
 _launch=Alt+P
 
@@ -412,8 +415,6 @@ ShowOSD=Display\tMeta+Shift+P
 _launch=Meta+S\tMeta+Esc
 
 [services][org.kde.spectacle.desktop]
-CurrentMonitorScreenShot=none
-OpenWithoutScreenshot=none
 RecordRegion=Meta+Shift+R
 _launch=Print
 
