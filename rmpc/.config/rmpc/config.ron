@@ -31,7 +31,7 @@
     quit_closes_modal: false,
     queue_disable_current_item_style_timeout_ms: None,
     album_art: (
-        method: Sixel,
+        method: Kitty,
         max_size_px: (width: 1200, height: 1200),
         disabled_protocols: ["http://", "https://"],
         vertical_align: Center,

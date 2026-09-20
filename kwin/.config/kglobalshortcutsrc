@@ -393,6 +393,9 @@ _launch=Meta+,
 [services][io.missioncenter.MissionCenter.desktop]
 _launch=Alt+S
 
+[services][kitty.desktop]
+_launch=Alt+K
+
 [services][md.obsidian.Obsidian.desktop]
 _launch=Meta+N
 
@@ -406,9 +409,6 @@ _launch=Meta+U
 [services][org.kde.dolphin.desktop]
 _launch=Meta+F
 
-[services][org.kde.konsole.desktop]
-_launch=Alt+K\tCtrl+Alt+T
-
 [services][org.kde.kscreen.desktop]
 ShowOSD=Display\tMeta+Shift+P
 
@@ -416,8 +416,6 @@ ShowOSD=Display\tMeta+Shift+P
 _launch=Meta+S\tMeta+Esc
 
 [services][org.kde.spectacle.desktop]
-CurrentMonitorScreenShot=none
-OpenWithoutScreenshot=none
 RecordRegion=Meta+Shift+R
 _launch=Print
 
