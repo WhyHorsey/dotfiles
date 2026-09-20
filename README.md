@@ -8,6 +8,7 @@ Currently this directory include :
 - [bash](https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html)
 - [btop](https://github.com/aristocratos/btop)
 - [fastfetch](https://github.com/fastfetch-cli/fastfetch)
+- [kitty](https://sw.kovidgoyal.net/kitty/)
 - [konsole](https://invent.kde.org/utilities/konsole)
 - [kwin](https://github.com/KDE/kwin)
 - [mpd](https://mpd.readthedocs.io/en/stable/user.html)
