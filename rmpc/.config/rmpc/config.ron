@@ -6,7 +6,7 @@
     password: None,
     theme: Some("nord"),
     cache_dir: Some("/tmp/rmpc/cache"),
-    lyrics_dir: Some("/home/whyhorsey/.config/rmpc/lyrics-rmpc"),
+    lyrics_dir: Some("/mnt/the-big/Fedora/Music"),
     on_song_change: ["/home/whyhorsey/.config/rmpc/on_song_change.sh"],
     volume_step: 5,
     max_fps: 30,
