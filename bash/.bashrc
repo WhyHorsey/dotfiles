@@ -902,3 +902,15 @@ function y() {
 
 # Path for cargo
 export PATH="$HOME/.cargo/bin:$PATH"
+
+# path for go
+export PATH="$HOME/go/bin:$PATH"
+
+# sync to server 
+alias syncmusictest='rsync -avhn --progress "/mnt/the-big/Fedora/Music/" acer-server:/srv/media/music/'
+alias syncmusic='rsync -avh --progress "/mnt/the-big/Fedora/Music/" acer-server:/srv/media/music/'
+alias exportdaily='~/bin/sync-daily-jams.sh'
+alias syncexplo="rsync -avhc --progress --itemize-changes '/mnt/the-big/Fedora/Music/explo/Weekly-Exploration/' acer-server:/srv/media/music/explo/Weekly-Exploration/"
+alias syncexplotest="rsync -avhnc --progress --itemize-changes '/mnt/the-big/Fedora/Music/explo/Weekly-Exploration/' acer-server:/srv/media/music/explo/Weekly-Exploration/"
+alias syncweekly="rsync -avhc --progress --itemize-changes acer-server:/srv/media/music/explo/Weekly-Exploration/ '/mnt/the-big/Fedora/Music/explo/Weekly-Exploration/'"
+alias syncweeklytest="rsync -avhnc --progress --itemize-changes acer-server:/srv/media/music/explo/Weekly-Exploration/ '/mnt/the-big/Fedora/Music/explo/Weekly-Exploration/'"
