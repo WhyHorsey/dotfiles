@@ -914,3 +914,9 @@ alias syncexplo="rsync -avhc --progress --itemize-changes '/mnt/the-big/Fedora/M
 alias syncexplotest="rsync -avhnc --progress --itemize-changes '/mnt/the-big/Fedora/Music/explo/Weekly-Exploration/' acer-server:/srv/media/music/explo/Weekly-Exploration/"
 alias syncweekly="rsync -avhc --progress --itemize-changes acer-server:/srv/media/music/explo/Weekly-Exploration/ '/mnt/the-big/Fedora/Music/explo/Weekly-Exploration/'"
 alias syncweeklytest="rsync -avhnc --progress --itemize-changes acer-server:/srv/media/music/explo/Weekly-Exploration/ '/mnt/the-big/Fedora/Music/explo/Weekly-Exploration/'"
+
+# rmpc 
+alias updatermpc="cargo install --git https://github.com/mierak/rmpc --locked --force rmpc"
+
+# alias for ssh
+alias startsshagent='eval $(ssh-agent) && ssh-add ~/.ssh/id_ed25519 && ssh-add ~/.ssh/acer-server'

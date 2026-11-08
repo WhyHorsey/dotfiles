@@ -52,24 +52,24 @@ class PresetWidths {
     constructor(presetWidths, spacing) {
         this.presets = PresetWidths.parsePresetWidths(presetWidths, spacing);
     }
-    next(currentWidth, minWidth, maxWidth) {
-        const widths = this.getWidths(minWidth, maxWidth);
+    next(currentWidth, minWidth, maxWidth, tilingAreaWidth) {
+        const widths = this.getWidths(minWidth, maxWidth, tilingAreaWidth);
         const nextIndex = widths.findIndex(width => width > currentWidth);
         return nextIndex >= 0 ? widths[nextIndex] : widths[0];
     }
-    prev(currentWidth, minWidth, maxWidth) {
-        const widths = this.getWidths(minWidth, maxWidth).reverse();
+    prev(currentWidth, minWidth, maxWidth, tilingAreaWidth) {
+        const widths = this.getWidths(minWidth, maxWidth, tilingAreaWidth).reverse();
         const nextIndex = widths.findIndex(width => width < currentWidth);
         return nextIndex >= 0 ? widths[nextIndex] : widths[0];
     }
-    getWidths(minWidth, maxWidth) {
-        const widths = this.presets.map(f => clamp(f(maxWidth), minWidth, maxWidth));
+    getWidths(minWidth, maxWidth, tilingAreaWidth) {
+        const widths = this.presets.map(f => clamp(f(tilingAreaWidth), minWidth, maxWidth));
         widths.sort((a, b) => a - b);
         return uniq(widths);
     }
     static parsePresetWidths(presetWidths, spacing) {
         function getRatioFunction(ratio) {
-            return (maxWidth) => Math.floor((maxWidth + spacing) * ratio - spacing);
+            return (tilingAreaWidth) => Math.floor((tilingAreaWidth + spacing) * ratio - spacing);
         }
         return presetWidths.split(",").map((widthStr) => {
             widthStr = widthStr.trim();
@@ -123,7 +123,7 @@ class ContextualResizer {
             column.getWidth() + leftSpace + rightSpace,
             column.getWidth() + leftSpace + rightSpace + leftVisibleColumn.getWidth() + grid.config.gapsInnerHorizontal,
             column.getWidth() + leftSpace + rightSpace + rightVisibleColumn.getWidth() + grid.config.gapsInnerHorizontal,
-            ...this.presetWidths.getWidths(minWidth, maxWidth),
+            ...this.presetWidths.getWidths(minWidth, maxWidth, desktop.tilingArea.width),
         ], width => width - column.getWidth());
         if (newWidth === undefined) {
             return;
@@ -161,7 +161,7 @@ class ContextualResizer {
         const newWidth = findMinPositive([
             column.getWidth() - leftOffScreen,
             column.getWidth() - rightOffScreen,
-            ...this.presetWidths.getWidths(minWidth, maxWidth),
+            ...this.presetWidths.getWidths(minWidth, maxWidth, desktop.tilingArea.width),
         ], width => column.getWidth() - width);
         if (newWidth === undefined) {
             return;
@@ -172,7 +172,7 @@ class ContextualResizer {
     maximizeWidth(column) {
         const grid = column.grid;
         const desktop = grid.desktop;
-        const presetWidths = this.presetWidths.getWidths(column.getMinWidth(), column.getMaxWidth());
+        const presetWidths = this.presetWidths.getWidths(column.getMinWidth(), column.getMaxWidth(), desktop.tilingArea.width);
         const maxWidth = presetWidths[presetWidths.length - 1];
         column.setWidth(maxWidth, true);
         desktop.scrollCenterVisible(column);
@@ -180,7 +180,7 @@ class ContextualResizer {
     minimizeWidth(column) {
         const grid = column.grid;
         const desktop = grid.desktop;
-        const presetWidths = this.presetWidths.getWidths(column.getMinWidth(), column.getMaxWidth());
+        const presetWidths = this.presetWidths.getWidths(column.getMinWidth(), column.getMaxWidth(), desktop.tilingArea.width);
         const minWidth = presetWidths[0];
         column.setWidth(minWidth, true);
         desktop.scrollCenterVisible(column);
@@ -192,7 +192,7 @@ class RawResizer {
     }
     increaseWidth(column) {
         const newWidth = findMinPositive([
-            ...this.presetWidths.getWidths(column.getMinWidth(), column.getMaxWidth()),
+            ...this.presetWidths.getWidths(column.getMinWidth(), column.getMaxWidth(), column.grid.desktop.tilingArea.width),
         ], width => width - column.getWidth());
         if (newWidth === undefined) {
             return;
@@ -201,7 +201,7 @@ class RawResizer {
     }
     decreaseWidth(column) {
         const newWidth = findMinPositive([
-            ...this.presetWidths.getWidths(column.getMinWidth(), column.getMaxWidth()),
+            ...this.presetWidths.getWidths(column.getMinWidth(), column.getMaxWidth(), column.grid.desktop.tilingArea.width),
         ], width => column.getWidth() - width);
         if (newWidth === undefined) {
             return;
@@ -209,12 +209,12 @@ class RawResizer {
         column.setWidth(newWidth, true);
     }
     maximizeWidth(column) {
-        const presetWidths = this.presetWidths.getWidths(column.getMinWidth(), column.getMaxWidth());
+        const presetWidths = this.presetWidths.getWidths(column.getMinWidth(), column.getMaxWidth(), column.grid.desktop.tilingArea.width);
         const maxWidth = presetWidths[presetWidths.length - 1];
         column.setWidth(maxWidth, true);
     }
     minimizeWidth(column) {
-        const presetWidths = this.presetWidths.getWidths(column.getMinWidth(), column.getMaxWidth());
+        const presetWidths = this.presetWidths.getWidths(column.getMinWidth(), column.getMaxWidth(), column.grid.desktop.tilingArea.width);
         const minWidth = presetWidths[0];
         column.setWidth(minWidth, true);
     }
@@ -649,11 +649,11 @@ class Actions {
             this.config.columnResizer.minimizeWidth(column);
         };
         this.cyclePresetWidths = (cm, dm, window, column, grid) => {
-            const nextWidth = this.config.presetWidths.next(column.getWidth(), column.getMinWidth(), column.getMaxWidth());
+            const nextWidth = this.config.presetWidths.next(column.getWidth(), column.getMinWidth(), column.getMaxWidth(), grid.desktop.tilingArea.width);
             column.setWidth(nextWidth, true);
         };
         this.cyclePresetWidthsReverse = (cm, dm, window, column, grid) => {
-            const nextWidth = this.config.presetWidths.prev(column.getWidth(), column.getMinWidth(), column.getMaxWidth());
+            const nextWidth = this.config.presetWidths.prev(column.getWidth(), column.getMinWidth(), column.getMaxWidth(), grid.desktop.tilingArea.width);
             column.setWidth(nextWidth, true);
         };
         this.columnsWidthEqualize = (cm, dm) => {
@@ -1333,10 +1333,17 @@ class Column {
                 maxMinWidth = minWidth;
             }
         }
-        return maxMinWidth;
+        return Math.min(maxMinWidth, this.grid.desktop.tilingArea.width); // min width mustn't exceed tilingArea width
     }
     getMaxWidth() {
-        return this.grid.desktop.tilingArea.width;
+        let minMaxWidth = this.grid.desktop.tilingArea.width;
+        for (const window of this.windows.iterator()) {
+            const maxWidth = window.client.kwinClient.maxSize.width.floor();
+            if (maxWidth < minMaxWidth) {
+                minMaxWidth = maxWidth;
+            }
+        }
+        return Math.max(minMaxWidth, this.getMinWidth()); // max width mustn't be lower than min width
     }
     setWidth(width, setPreferred) {
         width = clamp(width, this.getMinWidth(), this.getMaxWidth());
@@ -1493,7 +1500,9 @@ class Column {
         if (this.width === 0) {
             this.setWidth(window.client.preferredWidth, false);
         }
-        // TODO: also change column width if the new window requires it
+        else {
+            this.setWidth(this.width, false); // re-apply width constraints of the new window
+        }
         this.resizeWindows();
         if (window.isFocused()) {
             this.onWindowFocused(window);
@@ -2152,6 +2161,7 @@ class WindowRuleEnforcer {
     shouldTile(kwinClient) {
         return this.preferTiling.matches(kwinClient) || (kwinClient.normalWindow &&
             !kwinClient.transient &&
+            !kwinClient.modal &&
             kwinClient.managed &&
             kwinClient.pid > -1 &&
             !kwinClient.fullScreen &&
@@ -2817,8 +2827,12 @@ class ClientManager {
     onClientFocused(kwinClient) {
         this.lastFocusedClient = kwinClient;
         const window = this.findTiledWindow(kwinClient);
-        if (window !== null) {
-            window.onFocused();
+        if (window === null) {
+            return;
+        }
+        window.onFocused();
+        if (this.config.cursorFollowsFocus) {
+            this.moveCursorToWindow(window);
         }
     }
     findTiledWindow(kwinClient) {
@@ -2847,6 +2861,13 @@ class ClientManager {
     }
     destroy() {
         this.removeAllClients();
+    }
+    moveCursorToWindow(window) {
+        const cursorAlreadyOnWindow = rectContainsPoint(roundQtRect(window.client.kwinClient.frameGeometry), Workspace.cursorPos);
+        if (cursorAlreadyOnWindow) {
+            return;
+        }
+        moveCursorToFocus.call();
     }
 }
 class ClientWrapper {
@@ -3297,11 +3318,10 @@ class World {
     constructor(config) {
         const focusPasser = new FocusPassing.Passer();
         this.workspaceSignalManager = initWorkspaceSignalHandlers(this, focusPasser);
-        this.cursorFollowsFocus = config.cursorFollowsFocus;
         let presetWidths = {
-            next: (currentWidth, minWidth, maxWidth) => currentWidth,
-            prev: (currentWidth, minWidth, maxWidth) => currentWidth,
-            getWidths: (minWidth, maxWidth) => [],
+            next: (currentWidth, minWidth, maxWidth, tilingAreaWidth) => currentWidth,
+            prev: (currentWidth, minWidth, maxWidth, tilingAreaWidth) => currentWidth,
+            getWidths: (minWidth, maxWidth, tilingAreaWidth) => [],
         };
         try {
             presetWidths = new PresetWidths(config.presetWidths, config.gapsInnerHorizontal);
@@ -3377,21 +3397,6 @@ class World {
         const currentDesktop = this.desktopManager.getCurrentDesktop();
         if (currentDesktop !== undefined) {
             currentDesktop.arrange();
-            this.moveCursorToFocus();
-        }
-    }
-    moveCursorToFocus() {
-        if (this.cursorFollowsFocus && Workspace.activeWindow !== null) {
-            // Only move cursor for tiled windows
-            const tiledWindow = this.clientManager.findTiledWindow(Workspace.activeWindow);
-            if (tiledWindow === null) {
-                return;
-            }
-            const cursorAlreadyInFocus = rectContainsPoint(roundQtRect(Workspace.activeWindow.frameGeometry), Workspace.cursorPos);
-            if (cursorAlreadyInFocus) {
-                return;
-            }
-            moveCursorToFocus.call();
         }
     }
     do(f) {
@@ -3774,12 +3779,13 @@ var ClientState;
             return manager;
         }
         static getResizeNeighborColumn(window) {
+            const eps = 20; // Detect edge near the edge as well
             const kwinClient = window.client.kwinClient;
             const column = window.column;
-            if (Workspace.cursorPos.x > rectRightRound(kwinClient.clientGeometry)) {
+            if (Workspace.cursorPos.x > rectRightRound(kwinClient.clientGeometry) - eps) {
                 return column.grid.getRightColumn(column);
             }
-            else if (Workspace.cursorPos.x < kwinClient.clientGeometry.x.round()) {
+            else if (Workspace.cursorPos.x < kwinClient.clientGeometry.x.round() + eps) {
                 return column.grid.getLeftColumn(column);
             }
             else {
